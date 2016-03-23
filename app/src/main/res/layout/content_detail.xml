@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.santossingh.moviesinfoapp.Activities.DetailActivity"
+    tools:showIn="@layout/activity_detail">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="12dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:padding="10dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/colorText"
+                android:background="@color/colorBackground"
+                android:id="@+id/movieTitle"
+                android:gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/moviePoster"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_gravity="top"
+                        android:layout_marginBottom="10dp">
+
+                        <TextView style="@style/TextView_Medium"
+                                  android:id="@+id/releaseLabel"
+                                  android:layout_weight="1"
+                                  android:text="@string/release_label"
+                                  android:layout_gravity="center"/>
+
+                        <TextView style="@style/TextView_Medium"
+                                  android:id="@+id/releaseDate"
+                                  android:layout_gravity="center"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="10dp">
+
+                        <TextView style="@style/TextView_Medium"
+                                  android:id="@+id/userRating"
+                                  android:text="@string/rating_label"/>
+
+                        <TextView style="@style/TextView_Medium"
+                                  android:id="@+id/rating_Percent"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ratingBar"
+                android:rating="10"
+                android:numStars="5"
+                android:layout_gravity="center"/>
+
+            <TextView style="@style/TextView_Medium"
+                      android:text="@string/overview_label"
+                      android:id="@+id/overViewTitle"
+                      android:paddingTop="5dp"/>
+
+            <TextView style="@style/TextView_Small"
+                      android:text="You’ll need to modify the build.gradle file for your app. These modifications will happen in the build.gradle file for your module’s directory, not the project root directory (it is the file highlighted in blue in the screenshot belowYou’ll need to modify the build.gradle file for your app. These modifications will happen in the build.gradle file for your module’s directory, not the project root directory (it is the file highlighted in blue in the screenshot below"
+                      android:id="@+id/overViewDetail"/>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
