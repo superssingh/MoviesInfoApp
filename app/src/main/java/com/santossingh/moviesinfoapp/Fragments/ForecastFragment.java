@@ -87,7 +87,13 @@ public class ForecastFragment extends Fragment implements AsyncResponse {
             forecastTask.delegate = this;
             forecastTask.execute("Popular");
 
-        customAdapter = new CustomAdapter(getActivity(), movieModels);
+        return rootView;
+    }
+
+    @Override
+    public void processFinish(List<MovieModel> movieModels) {
+        this.movieModels=movieModels;
+         customAdapter = new CustomAdapter(getActivity(), movieModels);
         gridView.setAdapter(customAdapter);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -108,12 +114,5 @@ public class ForecastFragment extends Fragment implements AsyncResponse {
                 startActivity(intent);
             }
         });
-
-        return rootView;
-    }
-
-    @Override
-    public void processFinish(List<MovieModel> movieModels) {
-        this.movieModels=movieModels;
     }
 }
