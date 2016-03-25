@@ -24,7 +24,7 @@ import java.util.List;
 public class ForecastTask extends AsyncTask<String, String, List<MovieModel>> {
     private final String LOG_TAG = ForecastTask.class.getSimpleName();
     public AsyncResponse delegate = null;
-    private String API_KEY = "f074b4f71849509c940cd25d16e9cab9";
+    private String API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
     private List<MovieModel> movieModelList;
 
     public ForecastTask(AsyncResponse listener) {
@@ -44,7 +44,7 @@ public class ForecastTask extends AsyncTask<String, String, List<MovieModel>> {
         String TopRated = "http://api.themoviedb.org/3/discover/movie?" +
                 "certification_country=US&certification=" +
                 "R&sort_by=vote_average.desc&api_key=" + API_KEY;
-        String Popularity = "http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=f074b4f71849509c940cd25d16e9cab9";
+        String Popularity = "http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=" + API_KEY;
 
         if (params[0].equals("TOP")) {
             params[0]=TopRated;
