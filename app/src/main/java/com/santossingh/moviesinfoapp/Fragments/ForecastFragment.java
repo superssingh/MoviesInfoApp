@@ -3,6 +3,7 @@ package com.santossingh.moviesinfoapp.Fragments;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,12 +27,14 @@ import java.util.List;
  * Created by Stark on 24-03-2016.
  */
 public class ForecastFragment extends Fragment implements AsyncResponse {
-    private List<MovieModel> movieModels;
+
     private static final String STATE_MOVIES ="state_movies";
-    private CustomAdapter customAdapter=null;
-    private GridView gridView=null;
-    private View rootView=null;
-    private ForecastTask forecastTask;
+    CustomAdapter customAdapter = null;
+    GridView gridView = null;
+    View rootView = null;
+    ForecastTask forecastTask;
+    private List<MovieModel> movieModels;
+
     //Constructor
     public ForecastFragment() {
 
@@ -46,8 +49,8 @@ public class ForecastFragment extends Fragment implements AsyncResponse {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        //outState.putParcelableArrayList(STATE_MOVIES, (ArrayList<? extends Parcelable>)
-          //      movieModels);
+        outState.putParcelableArrayList(STATE_MOVIES, (ArrayList<? extends Parcelable>)
+                movieModels);
     }
 
     @Override
@@ -63,6 +66,9 @@ public class ForecastFragment extends Fragment implements AsyncResponse {
                     item.setChecked(false);
                 }else{
                     item.setChecked(true);
+                    forecastTask = new ForecastTask();
+                    forecastTask.delegate = this;
+                    forecastTask.execute("POP");
                     return true;
                 }
             case R.id.High_rated:
@@ -70,7 +76,9 @@ public class ForecastFragment extends Fragment implements AsyncResponse {
                     item.setChecked(false);
                 }else{
                     item.setChecked(true);
-
+                    forecastTask = new ForecastTask();
+                    forecastTask.delegate = this;
+                    forecastTask.execute("TOP");
                     return true;
                 }
         }
@@ -80,30 +88,41 @@ public class ForecastFragment extends Fragment implements AsyncResponse {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.activity_main, container, false);
-        gridView=(GridView)rootView.findViewById(R.id.gridView);
+
         movieModels=new ArrayList<MovieModel>();
-
-            forecastTask = new ForecastTask(this);
+        if (savedInstanceState == null || !savedInstanceState.containsKey(STATE_MOVIES)) {
+            forecastTask = new ForecastTask();
             forecastTask.delegate = this;
-            forecastTask.execute("Popular");
-
+            forecastTask.execute("POP");
+        } else {
+            movieModels = savedInstanceState.getParcelableArrayList(STATE_MOVIES);
+            setAdapterView(movieModels);
+        }
         return rootView;
     }
 
     @Override
-    public void processFinish(List<MovieModel> movieModels) {
-        this.movieModels=movieModels;
-         customAdapter = new CustomAdapter(getActivity(), movieModels);
+    public void processFinish(final List<MovieModel> movieModelsList) {
+        this.movieModels = movieModelsList;
+        setAdapterView(movieModels);
+    }
+
+    public void setAdapterView(List<MovieModel> movieModels) {
+
+        gridView = (GridView) rootView.findViewById(R.id.gridView);
+        final List<MovieModel> moviesList = new ArrayList<>(movieModels);
+        customAdapter = new CustomAdapter(getActivity(), movieModels);
+        gridView.clearChoices();
         gridView.setAdapter(customAdapter);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String movie_name = movieModels.get(position).getTitle();
-                String poster_path = movieModels.get(position).getPoster_path();
-                String release_date = movieModels.get(position).getRelease_date();
-                Float users_rating = movieModels.get(position).getVote_average();
-                String overview = movieModels.get(position).getOverview();
+                String movie_name = moviesList.get(position).getTitle();
+                String poster_path = moviesList.get(position).getPoster_path();
+                String release_date = moviesList.get(position).getRelease_date();
+                Float users_rating = moviesList.get(position).getVote_average();
+                String overview = moviesList.get(position).getOverview();
 
                 Intent intent = new Intent(getActivity(), DetailActivity.class)
                         .putExtra("movie_Name", movie_name)
