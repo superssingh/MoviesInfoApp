@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class ForecastTask extends AsyncTask<String, String, List<MovieModel>> {
     private final String LOG_TAG = ForecastTask.class.getSimpleName();
-    private String API_KEY = "f074b4f71849509c940cd25d16e9cab9";
+    private String API_KEY = "xxxxxxxxxxxxxxxxxxxxxx";
     private List<MovieModel> movieModelList;
     public AsyncResponse delegate=null;
 
